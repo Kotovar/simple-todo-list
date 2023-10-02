@@ -1,6 +1,19 @@
+/* Общие настройки */
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  font-family: var(--main-font-famile);
+}
+
+:root {
+  --main-font-size: 1rem;
+  --main-font-famile: "Cinzel", "Georgia", "Times New Roman", serif;
+  --main-font-color: rgb(101, 67, 58);
+  --second-font-color: beige;
+  --third-font-color: bisque;
+  --top-font-hover: rgb(144, 120, 113);
+  --main-font-hover: rgb(219, 219, 191);
 }
 
 #root {
@@ -10,25 +23,130 @@
     "aside main";
 }
 
-header {
-  height: 10vh;
-  width: 100vw;
-  background-color: aquamarine;
-  grid-area: header;
+/* Иконки */
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+  font-size: calc(var(--main-font-size) * 3);
+  line-height: normal;
+  cursor: pointer;
 }
 
+/* Настройка скрытия форм  */
+.hidden {
+  display: none;
+}
+
+.block {
+  display: block;
+}
+
+/* Настройка наведения курсора мыши */
+aside div:hover {
+  background-color: var(--main-font-hover);
+  cursor: pointer;
+}
+
+h1 {
+  cursor: default;
+}
+
+.icon-click:hover {
+  color: var(--top-font-hover);
+}
+
+/* Настройка верхней части страницы */
+header {
+  grid-area: header;
+  height: 10vh;
+  width: 100vw;
+  background-color: var(--main-font-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--second-font-color);
+}
+
+header div {
+  padding: 0 1rem;
+}
+
+/* Настройка левой панели */
 aside {
   height: 90vh;
   width: 20vw;
-  background-color: beige;
+  background-color: var(--second-font-color);
   grid-area: aside;
+  overflow-y: auto;
+  color: var(--main-font-color);
 }
 
+aside::-webkit-scrollbar {
+  width: 0;
+}
+
+aside h1 {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+aside div {
+  padding: 0 0.6rem;
+  align-items: center;
+}
+
+.project {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Настройки раздела с добавлением проекта */
+#addProject {
+  gap: 0.3rem;
+  display: flex;
+}
+
+#addProject div,
+.projectName {
+  font-size: calc(var(--main-font-size) * 1.2);
+  font-weight: 600;
+}
+
+#addNameProject {
+  border: 3px solid var(--main-font-color);
+  margin: 0.5rem 0;
+  width: 100%;
+}
+
+#addNameProject:focus {
+  outline: none;
+}
+
+#addNameProject + div {
+  justify-content: center;
+  gap: 1rem;
+  display: flex;
+}
+
+#addNameProject + div button {
+  border-radius: 10px;
+  padding: 0.2rem;
+  width: 5rem;
+}
+
+#addProjectButton {
+  background-color: rgb(98, 163, 98);
+}
+
+#cancelProjectButton {
+  background-color: rgb(200, 26, 26);
+}
+
+/* Настройка правой панели */
 main {
+  grid-area: main;
   height: 90vh;
   width: 80vw;
-  background-color: bisque;
-  grid-area: main;
+  background-color: var(--third-font-color);
   overflow-y: auto;
 }
 
@@ -36,33 +154,30 @@ main::-webkit-scrollbar {
   width: 0;
 }
 
+/* настройки для мобильной версии */
 @media (max-width: 768px) {
   #root {
-    display: grid;
     grid-template-areas:
       "header"
       "aside"
       "main";
   }
 
-  header {
-    height: 5vh;
-    width: 100vw;
-    background-color: aquamarine;
-    grid-area: header;
-  }
-
   aside {
     height: 15vh;
     width: 100vw;
-    background-color: beige;
-    grid-area: aside;
   }
 
   main {
-    height: 80vh;
+    height: 75vh;
     width: 100vw;
-    background-color: bisque;
-    grid-area: main;
+  }
+
+  header h1 {
+    font-size: calc(var(--main-font-size) * 1.5);
+  }
+
+  .projectName {
+    font-size: var(--main-font-size);
   }
 }
