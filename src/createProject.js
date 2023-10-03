@@ -48,13 +48,17 @@ function addProjectFromDOM(project) {
   console.log(projects);
 }
 
-//функция для добавления меню у проектов
-export function showProjectMenu() {
+//функция для удаления проектов
+export function deleteProject() {
   let aside = document.getElementsByTagName("aside")[0];
-  // let projectMenu = document.getElementsByClassName("projectMenu");
   aside.addEventListener("click", function (e) {
-    if (e.target.classList.value == "projectMenu material-symbols-outlined") {
-      console.log("Попал!");
+    let element = e.target;
+    if (element.classList.value == "projectMenu material-symbols-outlined") {
+      let container = element.parentElement;
+      let divSibling = element.previousElementSibling;
+      let findObj = projects.find((el) => el.title === divSibling.textContent);
+      container.remove();
+      delProjectFromArray(findObj);
     }
   });
 }
