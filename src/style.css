@@ -107,8 +107,13 @@ aside div {
 
 #addProject div,
 .projectName {
-  font-size: calc(var(--main-font-size) * 1.2);
+  font-size: calc(var(--main-font-size) * 1.3);
   font-weight: 600;
+}
+
+#addProject span,
+.projectMenu {
+  font-size: calc(var(--main-font-size) * 2);
 }
 
 #addNameProject {

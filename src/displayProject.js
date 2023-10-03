@@ -1,21 +1,29 @@
-const {
+import {
   projects,
   createProject,
   addProjectToArray,
   delProjectFromArray,
-} = require("./createProject");
+} from "./createProject.js";
+
+export default function listenersProject() {
+  startListenerAddProjectMenu();
+  startListenersProjectButtonAdd();
+  startListenersProjectButtonCancel();
+}
 
 let createProjectForm = document.getElementById("createProjectForm");
+let inputProject = document.getElementById("addNameProject");
 
-export function startListenerAddProjectMenu() {
+function startListenerAddProjectMenu() {
   let addProject = document.getElementById("addProject");
   addProject.addEventListener("click", function () {
-    createProjectForm.classList.toggle("hidden");
+    createProjectForm.classList.contains("hidden")
+      ? createProjectForm.classList.remove("hidden")
+      : null;
   });
 }
 
-export function startListenersProjectButtons() {
-  let inputProject = document.getElementById("addNameProject");
+function startListenersProjectButtonAdd() {
   let addProjectButton = document.getElementById("addProjectButton");
   addProjectButton.addEventListener("click", function () {
     if (inputProject.value === "") {
@@ -23,9 +31,27 @@ export function startListenersProjectButtons() {
     } else {
       let project = createProject(inputProject.value);
       addProjectToArray(project);
-      createProjectForm.classList.toggle("hidden");
-      inputProject.value = "";
+      createProjectForm.classList.add("hidden");
+      clear();
     }
-    console.log(projects);
   });
+
+  inputProject.addEventListener("keypress", function (e) {
+    if (e.code === "Enter") {
+      addProjectButton.click();
+      e.preventDefault();
+    }
+  });
+}
+
+function startListenersProjectButtonCancel() {
+  let cancelProjectButton = document.getElementById("cancelProjectButton");
+  cancelProjectButton.addEventListener("click", function () {
+    createProjectForm.classList.add("hidden");
+    clear();
+  });
+}
+
+function clear() {
+  inputProject.value = "";
 }
