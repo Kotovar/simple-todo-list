@@ -1,9 +1,4 @@
-import {
-  projects,
-  createProject,
-  addProjectToArray,
-  delProjectFromArray,
-} from "./createProject.js";
+import { map, createNotebook, deleteProject } from "./createProject.js";
 
 export default function listenersProject() {
   startListenerAddProjectMenu();
@@ -11,47 +6,49 @@ export default function listenersProject() {
   startListenersProjectButtonCancel();
 }
 
-let createProjectForm = document.getElementById("createProjectForm");
-let inputProject = document.getElementById("addNameProject");
+let createNotebookForm = document.getElementById("createNotebookForm");
+let addNameNotebook = document.getElementById("addNameNotebook");
 
+// прослушка "Add notebook" для открытия окна создания блокнота
 function startListenerAddProjectMenu() {
-  let addProject = document.getElementById("addProject");
-  addProject.addEventListener("click", function () {
-    createProjectForm.classList.contains("hidden")
-      ? createProjectForm.classList.remove("hidden")
+  let addNotebookDiv = document.getElementById("addNotebookDiv");
+  addNotebookDiv.addEventListener("click", function () {
+    createNotebookForm.classList.contains("hidden")
+      ? createNotebookForm.classList.remove("hidden")
       : null;
   });
 }
 
+// прослушка "Add" для добавления блокнота
 function startListenersProjectButtonAdd() {
-  let addProjectButton = document.getElementById("addProjectButton");
-  addProjectButton.addEventListener("click", function () {
-    if (inputProject.value === "") {
+  let addNotebookButton = document.getElementById("addNotebookButton");
+  addNotebookButton.addEventListener("click", function () {
+    if (addNameNotebook.value === "") {
       alert("Project name not entered");
     } else {
-      let project = createProject(inputProject.value);
-      addProjectToArray(project);
-      createProjectForm.classList.add("hidden");
+      createNotebook(addNameNotebook.value);
+      createNotebookForm.classList.add("hidden");
       clear();
     }
   });
 
-  inputProject.addEventListener("keypress", function (e) {
+  addNameNotebook.addEventListener("keypress", function (e) {
     if (e.code === "Enter") {
-      addProjectButton.click();
+      addNotebookButton.click();
       e.preventDefault();
     }
   });
 }
 
+// прослушка "Cancel" для отмены ввода названия блокнота
 function startListenersProjectButtonCancel() {
-  let cancelProjectButton = document.getElementById("cancelProjectButton");
-  cancelProjectButton.addEventListener("click", function () {
-    createProjectForm.classList.add("hidden");
+  let cancelNotebookButton = document.getElementById("cancelNotebookButton");
+  cancelNotebookButton.addEventListener("click", function () {
+    createNotebookForm.classList.add("hidden");
     clear();
   });
 }
 
 function clear() {
-  inputProject.value = "";
+  addNameNotebook.value = "";
 }

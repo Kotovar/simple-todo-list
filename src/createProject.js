@@ -1,72 +1,49 @@
-export { projects, createProject, addProjectToArray, delProjectFromArray };
+export { map, createNotebook, deleteProject };
 
-let projects = [];
+let map = new Map(); // Хранилище проектов
 
-class Project {
-  constructor(title) {
-    this.title = title;
-  }
+// Функция для создания блокнота в Map и помещения его на страницу
+function createNotebook(notebookName) {
+  map.set(notebookName, []);
+  addProjectFromDOM(notebookName);
+  console.log(map);
 }
 
-// Функция для создания нового проекта
-function createProject(title) {
-  let project = new Project(title);
-  return project;
-}
-
-// Функция для добавления проекта в массив
-function addProjectToArray(project) {
-  projects.push(project);
-  addProjectFromDOM(project);
-}
-
-//Функция для удаления проекта из массива
-function delProjectFromArray(project) {
-  let index = projects.findIndex((p) => p.title === project.title);
-  if (index !== -1) {
-    projects.splice(index, 1);
-  }
-}
-
-//Функция для добавления проекта с экрана
-function addProjectFromDOM(project) {
+//Функция для создания блокнота в DOM
+function addProjectFromDOM(notebook) {
   let divProject = document.createElement("div");
   let divProjectName = document.createElement("div");
   let spanProject = document.createElement("span");
-  divProject.classList.add("project");
+  divProject.classList.add("notebook");
   divProjectName.classList.add("projectName");
   spanProject.classList.add("projectMenu", "material-symbols-outlined");
-  divProjectName.textContent = project.title;
-  spanProject.textContent = " close ";
+  divProjectName.textContent = notebook;
+  spanProject.textContent = " menu ";
   divProject.append(...[divProjectName, spanProject]);
-  let previous = document.getElementById("h1Project");
-  let projectColl = document.querySelectorAll(".project");
 
-  previous =
-    projectColl.length > 0 ? projectColl[projectColl.length - 1] : previous;
-  previous.after(divProject);
-  console.log(projects);
+  let previousNotebook = document.getElementById("h1Notebook");
+  let projectColl = document.querySelectorAll(".notebook");
+  previousNotebook =
+    projectColl.length > 0
+      ? projectColl[projectColl.length - 1]
+      : previousNotebook;
+  previousNotebook.after(divProject);
 }
 
 //функция для удаления проектов
-export function deleteProject() {
+function deleteProject() {
   let aside = document.getElementsByTagName("aside")[0];
   aside.addEventListener("click", function (e) {
     let element = e.target;
     if (element.classList.value == "projectMenu material-symbols-outlined") {
-      let container = element.parentElement;
-      let divSibling = element.previousElementSibling;
-      let findObj = projects.find((el) => el.title === divSibling.textContent);
-      container.remove();
-      delProjectFromArray(findObj);
+      element.parentElement.remove();
+      map.delete(element.previousElementSibling.textContent);
     }
   });
 }
 
 //Примеры
-let project1 = createProject("Project 1");
-addProjectToArray(project1);
-let project2 = createProject("Project 2");
-addProjectToArray(project2);
-let project3 = createProject("Project 3");
-addProjectToArray(project3);
+
+createNotebook("Work");
+createNotebook("Hobbies");
+createNotebook("Studing");

@@ -6,6 +6,10 @@
   font-family: var(--main-font-famile);
 }
 
+h1 {
+  cursor: default;
+}
+
 :root {
   --main-font-size: 1rem;
   --main-font-famile: "Cinzel", "Georgia", "Times New Roman", serif;
@@ -46,12 +50,33 @@ aside div:hover {
   cursor: pointer;
 }
 
-h1 {
-  cursor: default;
-}
-
 .icon-click:hover {
   color: var(--top-font-hover);
+}
+
+#addNotebookButton {
+  background-color: rgb(98, 163, 98);
+}
+
+#addNotebookButton:hover {
+  background-color: rgb(124, 209, 124);
+}
+
+#cancelNotebookButton {
+  background-color: rgb(200, 26, 26);
+}
+
+#cancelNotebookButton:hover {
+  background-color: rgb(236, 34, 34);
+}
+
+/* flex */
+
+header,
+.notebook,
+#addNotebookDiv,
+#addNameNotebook + div {
+  display: flex;
 }
 
 /* Настройка верхней части страницы */
@@ -60,7 +85,6 @@ header {
   height: 10vh;
   width: 100vw;
   background-color: var(--main-font-color);
-  display: flex;
   justify-content: space-between;
   align-items: center;
   color: var(--second-font-color);
@@ -72,10 +96,10 @@ header div {
 
 /* Настройка левой панели */
 aside {
+  grid-area: aside;
   height: 90vh;
   width: 20vw;
   background-color: var(--second-font-color);
-  grid-area: aside;
   overflow-y: auto;
   color: var(--main-font-color);
 }
@@ -94,56 +118,42 @@ aside div {
   align-items: center;
 }
 
-.project {
-  display: flex;
+.notebook {
   justify-content: space-between;
 }
 
 /* Настройки раздела с добавлением проекта */
-#addProject {
+#addNotebookDiv {
   gap: 0.3rem;
-  display: flex;
 }
 
-#addProject div,
+#addNotebookDiv div,
 .projectName {
   font-size: calc(var(--main-font-size) * 1.3);
   font-weight: 600;
 }
 
-#addProject span,
+#addNotebookDiv span,
 .projectMenu {
   font-size: calc(var(--main-font-size) * 2);
 }
 
-#addNameProject {
+#addNameNotebook {
   border: 3px solid var(--main-font-color);
   margin: 0.5rem 0;
   width: 100%;
 }
 
-#addNameProject:focus {
-  outline: none;
-}
-
-#addNameProject + div {
+/* кнопки Добавить и Отмена для проектов */
+#addNameNotebook + div {
   justify-content: center;
   gap: 1rem;
-  display: flex;
 }
 
-#addNameProject + div button {
+#addNameNotebook + div button {
   border-radius: 10px;
   padding: 0.2rem;
   width: 5rem;
-}
-
-#addProjectButton {
-  background-color: rgb(98, 163, 98);
-}
-
-#cancelProjectButton {
-  background-color: rgb(200, 26, 26);
 }
 
 /* Настройка правой панели */
@@ -157,6 +167,11 @@ main {
 
 main::-webkit-scrollbar {
   width: 0;
+}
+
+/* настройка окна с опциями для блокнотов и задач */
+.option {
+  border: 1px solid black;
 }
 
 /* настройки для мобильной версии */
