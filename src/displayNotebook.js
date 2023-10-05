@@ -1,16 +1,17 @@
-import { map, createNotebook, deleteProject } from "./createProject.js";
+import { map, createNotebook, deleteNotebook } from "./createNotebook.js";
 
 export default function listenersProject() {
-  startListenerAddProjectMenu();
-  startListenersProjectButtonAdd();
-  startListenersProjectButtonCancel();
+  startListenerAddNotebookMenu();
+  startListenersNotebookButtonAdd();
+  startListenersNotebookButtonCancel();
+  dropDownNotebook();
 }
 
 let createNotebookForm = document.getElementById("createNotebookForm");
 let addNameNotebook = document.getElementById("addNameNotebook");
 
 // прослушка "Add notebook" для открытия окна создания блокнота
-function startListenerAddProjectMenu() {
+function startListenerAddNotebookMenu() {
   let addNotebookDiv = document.getElementById("addNotebookDiv");
   addNotebookDiv.addEventListener("click", function () {
     createNotebookForm.classList.contains("hidden")
@@ -20,7 +21,7 @@ function startListenerAddProjectMenu() {
 }
 
 // прослушка "Add" для добавления блокнота
-function startListenersProjectButtonAdd() {
+function startListenersNotebookButtonAdd() {
   let addNotebookButton = document.getElementById("addNotebookButton");
   addNotebookButton.addEventListener("click", function () {
     if (addNameNotebook.value === "") {
@@ -41,7 +42,7 @@ function startListenersProjectButtonAdd() {
 }
 
 // прослушка "Cancel" для отмены ввода названия блокнота
-function startListenersProjectButtonCancel() {
+function startListenersNotebookButtonCancel() {
   let cancelNotebookButton = document.getElementById("cancelNotebookButton");
   cancelNotebookButton.addEventListener("click", function () {
     createNotebookForm.classList.add("hidden");
@@ -51,4 +52,36 @@ function startListenersProjectButtonCancel() {
 
 function clear() {
   addNameNotebook.value = "";
+}
+
+// Открытие выпадающего списка для блокнотов
+export let notebookOption = document.getElementById("notebookOption");
+let element;
+
+function dropDownNotebook() {
+  let body = document.querySelector("body");
+  body.addEventListener("click", function (e) {
+    element = e.target;
+    if (element.classList.contains("notebookMenu")) {
+      positionMenu();
+      element.parentElement.append(notebookOption);
+      notebookOption.style.display =
+        notebookOption.style.display === "block" ? "none" : "block";
+    } else if (notebookOption.style.display === "block") {
+      notebookOption.style.display = "none";
+    }
+  });
+}
+
+window.addEventListener("resize", function () {
+  if (notebookOption.style.display === "block") {
+    positionMenu();
+  }
+});
+
+function positionMenu() {
+  let coordinates = element.getBoundingClientRect();
+  notebookOption.style.left = coordinates.left + "px";
+  notebookOption.style.top = coordinates.top + "px";
+  notebookOption.style.transform = "translate(-90%, -90%)";
 }

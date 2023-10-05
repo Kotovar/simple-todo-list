@@ -56,6 +56,7 @@ aside div:hover {
 
 #addNotebookButton {
   background-color: rgb(98, 163, 98);
+  cursor: pointer;
 }
 
 #addNotebookButton:hover {
@@ -63,6 +64,7 @@ aside div:hover {
 }
 
 #cancelNotebookButton {
+  cursor: pointer;
   background-color: rgb(200, 26, 26);
 }
 
@@ -75,7 +77,8 @@ aside div:hover {
 header,
 .notebook,
 #addNotebookDiv,
-#addNameNotebook + div {
+#addNameNotebook + div,
+.optionMenu {
   display: flex;
 }
 
@@ -128,13 +131,13 @@ aside div {
 }
 
 #addNotebookDiv div,
-.projectName {
+.notebookName {
   font-size: calc(var(--main-font-size) * 1.3);
   font-weight: 600;
 }
 
 #addNotebookDiv span,
-.projectMenu {
+.notebookMenu {
   font-size: calc(var(--main-font-size) * 2);
 }
 
@@ -156,6 +159,36 @@ aside div {
   width: 5rem;
 }
 
+/* настройка окна с опциями и кнопок для блокнотов и задач */
+.optionMenu {
+  flex-direction: column;
+  width: max-content;
+  padding: 0;
+  display: none;
+  position: absolute;
+  border: 1px solid gray;
+  border-radius: 3px;
+  background-color: white;
+  z-index: 1;
+}
+
+.optionMenu:hover {
+  background-color: white;
+}
+
+.optionButton {
+  display: block;
+  width: 100%;
+  padding: 5px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.optionButton:hover {
+  background-color: lightgray;
+}
+
 /* Настройка правой панели */
 main {
   grid-area: main;
@@ -167,11 +200,6 @@ main {
 
 main::-webkit-scrollbar {
   width: 0;
-}
-
-/* настройка окна с опциями для блокнотов и задач */
-.option {
-  border: 1px solid black;
 }
 
 /* настройки для мобильной версии */
@@ -197,7 +225,7 @@ main::-webkit-scrollbar {
     font-size: calc(var(--main-font-size) * 1.5);
   }
 
-  .projectName {
+  .notebookName {
     font-size: var(--main-font-size);
   }
 }
