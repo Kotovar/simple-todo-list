@@ -1,5 +1,5 @@
-export { map, createNotebook, deleteNotebook, renameNotebook };
-import { notebookOption } from "./displayNotebook";
+export { map, createNotebook, deleteRenameNotebook };
+import { notebookCurrent, uniqueNotebook } from "./displayNotebook";
 
 let map = new Map(); // Хранилище проектов
 let aside = document.querySelector("aside");
@@ -33,30 +33,24 @@ function addProjectFromDOM(notebook) {
 }
 
 //функция для удаления блокнотов
-function deleteNotebook() {
+function deleteRenameNotebook() {
   aside.addEventListener("click", function (e) {
     let element = e.target;
     if (element.id == "notebookDelete") {
-      let notebook = element.closest(".notebook");
-      let projectName = notebook.querySelector(".notebookName").textContent;
-      map.delete(projectName);
-      notebook.remove();
-      aside.append(notebookOption);
+      map.delete(notebookCurrent.textContent);
+      notebookCurrent.parentNode.remove();
     }
-  });
-}
-
-//функция для переименования блокнотов
-function renameNotebook() {
-  aside.addEventListener("click", function (e) {
-    let element = e.target;
     if (element.id == "notebookRename") {
-      let notebook = element.closest(".notebook");
-      let notebookName = notebook.querySelector(".notebookName");
-      let oldName = notebookName.textContent;
+      let oldName = notebookCurrent.textContent;
       let newName = prompt("Enter new name for the notebook:", oldName);
+      while ((newName && newName.length > 20) || !uniqueNotebook(newName)) {
+        alert(
+          "The name is too long or the same as another notebook. Must be no more than 20 characters."
+        );
+        newName = prompt("Enter new name for the notebook:", newName);
+      }
       if (newName && newName != oldName) {
-        notebookName.textContent = newName;
+        notebookCurrent.textContent = newName;
         map.set(newName, map.get(oldName));
         map.delete(oldName);
       }

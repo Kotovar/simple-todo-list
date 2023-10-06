@@ -45,9 +45,13 @@ h1 {
 }
 
 /* Настройка наведения курсора мыши */
-aside div:hover {
+aside > div:hover {
   background-color: var(--main-font-hover);
   cursor: pointer;
+}
+
+#createNotebookForm:hover {
+  background-color: var(--second-font-color);
 }
 
 .icon-click:hover {
@@ -55,21 +59,21 @@ aside div:hover {
 }
 
 #addNotebookButton {
-  background-color: rgb(98, 163, 98);
+  background-color: rgb(140, 192, 140);
   cursor: pointer;
 }
 
 #addNotebookButton:hover {
-  background-color: rgb(124, 209, 124);
+  background-color: rgb(165, 194, 165);
 }
 
 #cancelNotebookButton {
   cursor: pointer;
-  background-color: rgb(200, 26, 26);
+  background-color: rgb(226, 95, 95);
 }
 
 #cancelNotebookButton:hover {
-  background-color: rgb(236, 34, 34);
+  background-color: rgb(224, 136, 136);
 }
 
 /* flex */
@@ -95,6 +99,10 @@ header {
 
 header div {
   padding: 0 1rem;
+}
+
+header h1 {
+  font-family: "Courier New", Courier, monospace;
 }
 
 /* Настройка левой панели */
@@ -126,19 +134,25 @@ aside div {
 }
 
 /* Настройки раздела с добавлением проекта */
-#addNotebookDiv {
-  gap: 0.3rem;
-}
-
 #addNotebookDiv div,
 .notebookName {
-  font-size: calc(var(--main-font-size) * 1.3);
+  font-size: calc(var(--main-font-size) * 1.1);
   font-weight: 600;
+  overflow: hidden;
+  white-space: nowrap;
 }
+
+/* .notebookName {
+  overflow: hidden;
+} */
 
 #addNotebookDiv span,
 .notebookMenu {
   font-size: calc(var(--main-font-size) * 2);
+}
+
+.notebookMenu {
+  align-self: flex-end;
 }
 
 #addNameNotebook {

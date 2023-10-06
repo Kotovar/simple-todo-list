@@ -1,4 +1,4 @@
-import { map, createNotebook, deleteNotebook } from "./createNotebook.js";
+import { createNotebook } from "./createNotebook.js";
 
 export default function listenersProject() {
   startListenerAddNotebookMenu();
@@ -9,6 +9,17 @@ export default function listenersProject() {
 
 let createNotebookForm = document.getElementById("createNotebookForm");
 let addNameNotebook = document.getElementById("addNameNotebook");
+
+//Проверка что все блокноты уникальные
+export function uniqueNotebook(name) {
+  let allNotebooks = document.getElementsByClassName("notebookName");
+  for (let notebook of allNotebooks) {
+    if (notebook.textContent === name) {
+      return false;
+    }
+  }
+  return true;
+}
 
 // прослушка "Add notebook" для открытия окна создания блокнота
 function startListenerAddNotebookMenu() {
@@ -25,9 +36,11 @@ function startListenersNotebookButtonAdd() {
   let addNotebookButton = document.getElementById("addNotebookButton");
   addNotebookButton.addEventListener("click", function () {
     if (addNameNotebook.value === "") {
-      alert("Project name not entered");
+      alert("Notebook name not entered");
+    } else if (!uniqueNotebook(addNameNotebook.value.trim())) {
+      alert("There is already a notepad with the same name");
     } else {
-      createNotebook(addNameNotebook.value);
+      createNotebook(addNameNotebook.value.trim());
       createNotebookForm.classList.add("hidden");
       clear();
     }
@@ -55,7 +68,8 @@ function clear() {
 }
 
 // Открытие выпадающего списка для блокнотов
-export let notebookOption = document.getElementById("notebookOption");
+let notebookOption = document.getElementById("notebookOption");
+export let notebookCurrent;
 let element;
 
 function dropDownNotebook() {
@@ -64,7 +78,7 @@ function dropDownNotebook() {
     element = e.target;
     if (element.classList.contains("notebookMenu")) {
       positionMenu();
-      element.parentElement.append(notebookOption);
+      notebookCurrent = element.previousElementSibling;
       notebookOption.style.display =
         notebookOption.style.display === "block" ? "none" : "block";
     } else if (notebookOption.style.display === "block") {
