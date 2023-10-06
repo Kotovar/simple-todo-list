@@ -1,5 +1,5 @@
 export { map, createNotebook, deleteRenameNotebook };
-import { notebookCurrent, uniqueNotebook } from "./displayNotebook";
+import { notebookCurrent, uniqueNotebook } from "./listenersNotebook";
 
 let map = new Map(); // Хранилище проектов
 let aside = document.querySelector("aside");
@@ -7,29 +7,29 @@ let aside = document.querySelector("aside");
 // Функция для создания блокнота в Map и помещения его на страницу
 function createNotebook(notebookName) {
   map.set(notebookName, []);
-  addProjectFromDOM(notebookName);
+  addNotebookFromDOM(notebookName);
   console.log(map);
 }
 
 //Функция для создания блокнота в DOM
-function addProjectFromDOM(notebook) {
-  let divProject = document.createElement("div");
-  let divProjectName = document.createElement("div");
-  let spanProject = document.createElement("span");
-  divProject.classList.add("notebook");
-  divProjectName.classList.add("notebookName");
-  spanProject.classList.add("notebookMenu", "material-symbols-outlined");
-  divProjectName.textContent = notebook;
-  spanProject.textContent = " more_vert ";
-  divProject.append(...[divProjectName, spanProject]);
+function addNotebookFromDOM(notebook) {
+  let divNotebook = document.createElement("div");
+  let divNotebookName = document.createElement("div");
+  let spanNotebook = document.createElement("span");
+  divNotebook.classList.add("notebook");
+  divNotebookName.classList.add("notebookName");
+  spanNotebook.classList.add("notebookMenu", "material-symbols-outlined");
+  divNotebookName.textContent = notebook;
+  spanNotebook.textContent = " more_vert ";
+  divNotebook.append(...[divNotebookName, spanNotebook]);
 
   let previousNotebook = document.getElementById("h1Notebook");
-  let projectColl = document.querySelectorAll(".notebook");
+  let notebookColl = document.querySelectorAll(".notebook");
   previousNotebook =
-    projectColl.length > 0
-      ? projectColl[projectColl.length - 1]
+    notebookColl.length > 0
+      ? notebookColl[notebookColl.length - 1]
       : previousNotebook;
-  previousNotebook.after(divProject);
+  previousNotebook.after(divNotebook);
 }
 
 //функция для удаления блокнотов

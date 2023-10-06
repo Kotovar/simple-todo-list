@@ -15,9 +15,10 @@ h1 {
   --main-font-famile: "Cinzel", "Georgia", "Times New Roman", serif;
   --main-font-color: rgb(101, 67, 58);
   --second-font-color: beige;
-  --third-font-color: bisque;
-  --top-font-hover: rgb(144, 120, 113);
-  --main-font-hover: rgb(219, 219, 191);
+  --third-color-color: rgb(248, 227, 202);
+  --top-color-hover: rgb(144, 120, 113);
+  --aside-color-hover: rgb(219, 219, 191);
+  --main-color-hover: rgb(202, 185, 164);
 }
 
 #root {
@@ -46,7 +47,13 @@ h1 {
 
 /* Настройка наведения курсора мыши */
 aside > div:hover {
-  background-color: var(--main-font-hover);
+  background-color: var(--aside-color-hover);
+  cursor: pointer;
+}
+
+main > .task:hover,
+main > #addTaskDiv:hover {
+  background-color: var(--main-color-hover);
   cursor: pointer;
 }
 
@@ -55,24 +62,28 @@ aside > div:hover {
 }
 
 .icon-click:hover {
-  color: var(--top-font-hover);
+  color: var(--top-color-hover);
 }
 
-#addNotebookButton {
+#addNotebookButton,
+#addTaskButton {
   background-color: rgb(140, 192, 140);
   cursor: pointer;
 }
 
-#addNotebookButton:hover {
+#addNotebookButton:hover,
+#addTaskButton:hover {
   background-color: rgb(165, 194, 165);
 }
 
-#cancelNotebookButton {
+#cancelNotebookButton,
+#cancelTaskButton {
   cursor: pointer;
-  background-color: rgb(226, 95, 95);
+  background-color: rgb(229, 108, 108);
 }
 
-#cancelNotebookButton:hover {
+#cancelNotebookButton:hover,
+#cancelTaskButton:hover {
   background-color: rgb(224, 136, 136);
 }
 
@@ -81,8 +92,11 @@ aside > div:hover {
 header,
 .notebook,
 #addNotebookDiv,
+#addTaskDiv,
 #addNameNotebook + div,
-.optionMenu {
+.optionMenu,
+.priority,
+#createTaskForm form {
   display: flex;
 }
 
@@ -103,6 +117,7 @@ header div {
 
 header h1 {
   font-family: "Courier New", Courier, monospace;
+  font-style: italic;
 }
 
 /* Настройка левой панели */
@@ -119,7 +134,8 @@ aside::-webkit-scrollbar {
   width: 0;
 }
 
-aside h1 {
+aside h1,
+main h1 {
   text-align: center;
   margin-top: 1rem;
 }
@@ -129,11 +145,7 @@ aside div {
   align-items: center;
 }
 
-.notebook {
-  justify-content: space-between;
-}
-
-/* Настройки раздела с добавлением проекта */
+/* Настройки раздела с добавлением блокнота */
 #addNotebookDiv div,
 .notebookName {
   font-size: calc(var(--main-font-size) * 1.1);
@@ -142,20 +154,22 @@ aside div {
   white-space: nowrap;
 }
 
-/* .notebookName {
-  overflow: hidden;
-} */
-
 #addNotebookDiv span,
 .notebookMenu {
   font-size: calc(var(--main-font-size) * 2);
+}
+
+.notebook {
+  justify-content: space-between;
 }
 
 .notebookMenu {
   align-self: flex-end;
 }
 
-#addNameNotebook {
+#addNameNotebook,
+#addNameTask,
+#addDescriptionTask {
   border: 3px solid var(--main-font-color);
   margin: 0.5rem 0;
   width: 100%;
@@ -167,10 +181,16 @@ aside div {
   gap: 1rem;
 }
 
-#addNameNotebook + div button {
+#addNameNotebook + div button,
+#dateTask + div button {
   border-radius: 10px;
   padding: 0.2rem;
   width: 5rem;
+}
+
+#addNameNotebook {
+  font-weight: 600;
+  color: var(--main-font-color);
 }
 
 /* настройка окна с опциями и кнопок для блокнотов и задач */
@@ -208,12 +228,92 @@ main {
   grid-area: main;
   height: 90vh;
   width: 80vw;
-  background-color: var(--third-font-color);
+  background-color: var(--third-color-color);
   overflow-y: auto;
 }
 
 main::-webkit-scrollbar {
   width: 0;
+}
+
+/* Настройки задач */
+.task {
+  display: grid;
+  grid-template-columns: 1fr 15fr 2fr 1fr 1fr;
+  align-items: center;
+  border: 3px solid var(--main-font-color);
+  margin: 0.5rem;
+  border-radius: 5px;
+  height: 5vh;
+}
+
+.task span {
+  color: var(--main-font-color);
+  font-size: calc(var(--main-font-size) * 1.4);
+  place-self: center;
+}
+
+.inProcess {
+  font-size: calc(var(--main-font-size) * 0.8);
+  font-weight: 600;
+}
+
+.dueDate {
+  border-left: 1px solid var(--main-font-color);
+  border-right: 1px solid var(--main-font-color);
+  border-radius: 5px;
+  text-align: center;
+  font-size: calc(var(--main-font-size) * 0.8);
+}
+
+/* Кнопка создания задач */
+#addTaskDiv {
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.5rem;
+  font-weight: 600;
+  color: var(--main-font-color);
+}
+
+#addTaskDiv span {
+  font-size: calc(var(--main-font-size) * 2);
+}
+
+/* окно создания задачи */
+#createTaskForm {
+  margin: 0.5rem;
+}
+
+#createTaskForm input,
+#createTaskForm,
+#addDescriptionTask {
+  font-weight: 600;
+  color: var(--main-font-color);
+}
+
+#createTaskForm form {
+  flex-direction: column;
+}
+
+#addDescriptionTask {
+  resize: vertical;
+}
+
+#dateTask {
+  margin: 0.5rem 0;
+  border: 3px solid var(--main-font-color);
+}
+
+#dateTask + div {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+/* выполненная и задача в процессе */
+
+.checkbox-done {
+  text-decoration: line-through;
 }
 
 /* настройки для мобильной версии */

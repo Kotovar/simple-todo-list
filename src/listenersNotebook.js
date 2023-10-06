@@ -1,6 +1,6 @@
 import { createNotebook } from "./createNotebook.js";
 
-export default function listenersProject() {
+export default function listenersNotebook() {
   startListenerAddNotebookMenu();
   startListenersNotebookButtonAdd();
   startListenersNotebookButtonCancel();
