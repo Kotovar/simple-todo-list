@@ -1,10 +1,9 @@
 // import { isFriday } from "date-fns";
 import "./style.css";
+
+import { selectNotepad } from "./interface";
 import listenersNotebook from "./listenersNotebook";
-import {
-  map, //убрать в конце, сейчас только для проверки массива
-  deleteRenameNotebook,
-} from "./createNotebook.js";
+import { deleteRenameNotebook } from "./createNotebook.js";
 import { currentDate } from "./createTask";
 import { listenersTask } from "./listenersTask";
 
@@ -13,5 +12,6 @@ listenersNotebook();
 deleteRenameNotebook();
 currentDate();
 listenersTask();
+selectNotepad();
 
 //Тестовый запуск

@@ -19,6 +19,7 @@ h1 {
   --top-color-hover: rgb(144, 120, 113);
   --aside-color-hover: rgb(219, 219, 191);
   --main-color-hover: rgb(202, 185, 164);
+  --selected-color: rgb(224, 207, 186);
 }
 
 #root {
@@ -38,7 +39,7 @@ h1 {
 
 /* Настройка скрытия форм  */
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .block {
@@ -173,6 +174,10 @@ aside div {
   border: 3px solid var(--main-font-color);
   margin: 0.5rem 0;
   width: 100%;
+}
+
+.selected {
+  background-color: var(--selected-color);
 }
 
 /* кнопки Добавить и Отмена для проектов */

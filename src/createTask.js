@@ -1,3 +1,5 @@
+import { map } from "./createNotebook";
+
 export function test() {
   console.log("CreateTask is worked");
 }
@@ -11,23 +13,45 @@ export function currentDate() {
 }
 
 // Функция для создания задачи в Map и помещения его на страницу
-export function createTask(taskName, date) {
-  let dateObject = new Date(date);
-  let day = String(dateObject.getDate()).padStart(2, "0");
-  let month = String(dateObject.getMonth() + 1).padStart(2, "0");
-  let year = dateObject.getFullYear();
-  let formattedDate = day + "-" + month + "-" + year;
+export function createTask(taskName, date, descriptionTask, taskDone) {
+  const formattedDate = date
+    ? new Date(date).toLocaleDateString("ru-RU", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      })
+    : "No deadline";
   addTaskFromDOM(taskName, formattedDate);
-  // map.set(notebookName, []);
-  // console.log(map);
+  let taskObject = {
+    name: taskName,
+    description: descriptionTask,
+    deadline: formattedDate,
+    done: taskDone,
+  };
+  let selectedDiv = document.querySelector(".selected");
+  let selectedText;
+  if (selectedDiv) {
+    selectedText = selectedDiv.firstChild.textContent;
+  } else {
+    selectedText = "Studing";
+  }
+
+  pushTaskToMap(taskObject, selectedText);
+}
+
+//функция для добавления задач в Map
+function pushTaskToMap(task, notebook) {
+  let notebookFromMap = map.get(notebook);
+  notebookFromMap.push(task);
 }
 
 //Функция для создания задачи в DOM
-function addTaskFromDOM(task, date) {
+export function addTaskFromDOM(task, date, done) {
+  let radioButton = done ? "radio_button_checked" : "radio_button_unchecked";
   let divTask = document.createElement("div");
   divTask.classList.add("task");
   let elements = [
-    ["span", "material-symbols-outlined", "radio_button_unchecked"],
+    ["span", "material-symbols-outlined", radioButton],
     ["div", "inProcess", task],
     ["div", "dueDate", date],
     ["span", "material-symbols-outlined", "keyboard_double_arrow_up"],
@@ -41,6 +65,9 @@ function addTaskFromDOM(task, date) {
     el.classList.contains("material-symbols-outlined")
       ? el.classList.add("taskMenu")
       : null;
+    el.classList.contains("inProcess") && done
+      ? el.classList.add("checkbox-done")
+      : null;
     divTask.append(el);
   }
 
@@ -51,6 +78,6 @@ function addTaskFromDOM(task, date) {
   previousTask.after(divTask);
 }
 
-createTask("Show Peter something", "2023-10-15");
-createTask("Iron the cat", "2023-10-25");
-createTask("Buy new cat", "2023-10-08");
+// createTask("Show Peter something", "2023-10-15", "Show him my code", true);
+// createTask("Iron the cat", "2023-10-25", "Iron with your hand!", false);
+// createTask("Buy new cat", "2023-10-08", "I hope this is a joke", true);
