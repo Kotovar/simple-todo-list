@@ -36,10 +36,18 @@ export function createTask(taskName, date, descriptionTask, taskDone) {
   pushTaskToMap(taskObject, selectedText);
 }
 
-//функция для добавления задач в Map
+//функция для добавления задач в Map и localStorage
 function pushTaskToMap(task, notebook) {
   let notebookFromMap = map.get(notebook);
   notebookFromMap.push(task);
+  upadteLocalStorage(map);
+}
+
+//обновление данных в localStorage
+function upadteLocalStorage(map) {
+  let notesJSON = JSON.stringify(Object.fromEntries(map));
+  localStorage.setItem("notes", notesJSON);
+  console.log(notesJSON);
 }
 
 //Функция для создания задачи в DOM
