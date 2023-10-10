@@ -35,7 +35,6 @@ export function createTask(taskName, date, descriptionTask, taskDone) {
   } else {
     selectedText = "Studing";
   }
-
   pushTaskToMap(taskObject, selectedText);
 }
 
@@ -54,7 +53,7 @@ export function addTaskFromDOM(task, date, done) {
     ["span", "material-symbols-outlined", radioButton],
     ["div", "inProcess", task],
     ["div", "dueDate", date],
-    ["span", "material-symbols-outlined", "keyboard_double_arrow_up"],
+    ["span", "material-symbols-outlined", "stat_minus_2"],
     ["span", "material-symbols-outlined", "menu"],
   ];
   for (let [tag, className, text] of elements) {
@@ -64,6 +63,9 @@ export function addTaskFromDOM(task, date, done) {
     el.textContent === "menu" &&
     el.classList.contains("material-symbols-outlined")
       ? el.classList.add("taskMenu")
+      : el.textContent === "stat_minus_2" &&
+        el.classList.contains("material-symbols-outlined")
+      ? el.classList.add("showDescription")
       : null;
     el.classList.contains("inProcess") && done
       ? el.classList.add("checkbox-done")
@@ -72,12 +74,13 @@ export function addTaskFromDOM(task, date, done) {
   }
 
   let previousTask = document.getElementById("h1Task");
+
   let taskColl = document.querySelectorAll(".task");
   previousTask =
     taskColl.length > 0 ? taskColl[taskColl.length - 1] : previousTask;
   previousTask.after(divTask);
 }
 
-// createTask("Show Peter something", "2023-10-15", "Show him my code", true);
-// createTask("Iron the cat", "2023-10-25", "Iron with your hand!", false);
-// createTask("Buy new cat", "2023-10-08", "I hope this is a joke", true);
+createTask("Show Peter something", "2023-10-15", "Show him my code", false);
+createTask("Iron the cat", "2023-10-25", "Iron with your hand!", false);
+createTask("Buy new cat", "2023-10-08", "I hope this is a joke", false);

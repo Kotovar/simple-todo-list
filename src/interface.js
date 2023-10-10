@@ -41,6 +41,8 @@ function showTasksInDom() {
 // Очистить поле от задач
 export function deleteTasksFromDom() {
   let tasksInDom = document.querySelectorAll(".task");
+  let descriptionDiv = document.getElementById("descriptionDiv");
+  descriptionDiv.classList.add("hidden");
   for (let task of tasksInDom) {
     task.remove();
   }

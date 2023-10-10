@@ -315,6 +315,22 @@ main::-webkit-scrollbar {
   justify-content: flex-end;
 }
 
+/* форма для отображения описания у задачи */
+#descriptionDiv {
+  border: 3px solid var(--main-font-color);
+  margin: 0.5rem;
+  border-radius: 5px;
+  height: 15vh;
+}
+
+#description {
+  width: 100%;
+  height: 100%;
+  resize: none;
+  background-color: var(--third-color-color);
+  outline: none;
+  padding: 0.5rem;
+}
 /* выполненная и задача в процессе */
 
 .checkbox-done {

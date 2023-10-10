@@ -65,6 +65,6 @@ function deleteRenameNotebook() {
 
 //Примеры
 
-// createNotebook("Work");
-// createNotebook("Hobbies");
-// createNotebook("Studing");
+createNotebook("Work");
+createNotebook("Hobbies");
+createNotebook("Studing");

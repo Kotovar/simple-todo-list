@@ -6,6 +6,7 @@ export function listenersTask() {
   startListenersTaskButtonCancel();
   startListenerCheckTask();
   startListenersTaskButtonAdd();
+  startListenerShowDescription();
 }
 
 let createTaskForm = document.getElementById("createTaskForm");
@@ -91,6 +92,27 @@ function startListenerCheckTask() {
           el.done = false;
         }
       });
+    }
+  });
+}
+
+// Прослушка кнопки на задачи для открытия её описания
+
+function startListenerShowDescription() {
+  let description = document.getElementById("description");
+  let currentTask;
+  let descriptionDiv = document.getElementById("descriptionDiv");
+  main.addEventListener("click", function (e) {
+    let element = e.target;
+    let notebookDiv = document.querySelector(".selected");
+    let tasks = map.get(notebookDiv.firstChild.textContent);
+    if (element.classList.contains("showDescription")) {
+      currentTask = element.parentNode.querySelector(".inProcess").textContent;
+      tasks.forEach((el) => {
+        el.name === currentTask ? (description.value = el.description) : null;
+      });
+      console.log(tasks);
+      descriptionDiv.classList.remove("hidden");
     }
   });
 }
