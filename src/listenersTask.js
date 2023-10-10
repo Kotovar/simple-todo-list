@@ -7,12 +7,49 @@ export function listenersTask() {
   startListenerCheckTask();
   startListenersTaskButtonAdd();
   startListenerShowDescription();
+  dropDownTask();
 }
 
 let createTaskForm = document.getElementById("createTaskForm");
 let addNameTask = document.getElementById("addNameTask");
 let addDescriptionTask = document.getElementById("addDescriptionTask");
 export let main = document.querySelector("main");
+
+// Открытие выпадающего списка для блокнотов
+let taskOption = document.getElementById("taskOption");
+export let taskCurrent;
+let element;
+
+function dropDownTask() {
+  let body = document.querySelector("body");
+
+  body.addEventListener("click", function (e) {
+    element = e.target;
+    if (element.classList.contains("taskMenu")) {
+      positionMenu();
+      taskCurrent =
+        element.previousElementSibling.previousElementSibling
+          .previousElementSibling;
+      taskOption.style.display =
+        taskOption.style.display === "block" ? "none" : "block";
+    } else if (taskOption.style.display === "block") {
+      taskOption.style.display = "none";
+    }
+  });
+}
+
+window.addEventListener("resize", function () {
+  if (taskOption.style.display === "block") {
+    positionMenu();
+  }
+});
+
+function positionMenu() {
+  let coordinates = element.getBoundingClientRect();
+  taskOption.style.left = coordinates.left + "px";
+  taskOption.style.top = coordinates.top + "px";
+  taskOption.style.transform = "translate(-90%, -90%)";
+}
 
 // прослушка "Add Task" для открытия окна создания задачи
 function startListenerAddTaskMenu() {
@@ -96,23 +133,46 @@ function startListenerCheckTask() {
   });
 }
 
-// Прослушка кнопки на задачи для открытия её описания
+// Поиск и обновление задачи
+function findAndUpdateTask(name, description) {
+  let notebookDiv = document.querySelector(".selected");
+  let tasks = map.get(notebookDiv.firstChild.textContent);
+  let task = tasks.find((el) => el.name === name);
+  if (task) {
+    task.description = description;
+  }
+}
+
+// Показ и скрытие описания задачи
+function showOrHideDescription(element) {
+  let descriptionDiv = document.getElementById("descriptionDiv");
+  let description = document.getElementById("description");
+  let notebookDiv = document.querySelector(".selected");
+  let tasks = map.get(notebookDiv.firstChild.textContent);
+  let task = tasks.filter(
+    (el) =>
+      el.name === element.parentNode.querySelector(".inProcess").textContent
+  )[0];
+  if (task) {
+    description.value = task.description;
+  }
+  element.parentNode.after(descriptionDiv);
+  descriptionDiv.classList.toggle("hidden");
+}
 
 function startListenerShowDescription() {
-  let description = document.getElementById("description");
   let currentTask;
-  let descriptionDiv = document.getElementById("descriptionDiv");
   main.addEventListener("click", function (e) {
     let element = e.target;
-    let notebookDiv = document.querySelector(".selected");
-    let tasks = map.get(notebookDiv.firstChild.textContent);
+    if (element === main) {
+      document.getElementById("descriptionDiv").classList.add("hidden");
+    }
     if (element.classList.contains("showDescription")) {
       currentTask = element.parentNode.querySelector(".inProcess").textContent;
-      tasks.forEach((el) => {
-        el.name === currentTask ? (description.value = el.description) : null;
-      });
-      console.log(tasks);
-      descriptionDiv.classList.remove("hidden");
+      showOrHideDescription(element);
     }
+  });
+  description.addEventListener("input", function () {
+    findAndUpdateTask(currentTask, description.value);
   });
 }

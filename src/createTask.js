@@ -1,8 +1,5 @@
 import { map } from "./createNotebook";
-
-export function test() {
-  console.log("CreateTask is worked");
-}
+import { main, taskCurrent } from "./listenersTask.js";
 
 export function currentDate() {
   var dateTask = document.getElementById("dateTask");
@@ -10,6 +7,7 @@ export function currentDate() {
   var minDate = today.toISOString().split("T")[0];
   dateTask.setAttribute("min", minDate);
   dateTask.value = minDate;
+  return minDate;
 }
 
 // Функция для создания задачи в Map и помещения его на страницу
@@ -79,6 +77,72 @@ export function addTaskFromDOM(task, date, done) {
   previousTask =
     taskColl.length > 0 ? taskColl[taskColl.length - 1] : previousTask;
   previousTask.after(divTask);
+}
+
+//функция для удаления и переименования задач
+export function deleteRenameTask() {
+  main.addEventListener("click", function (e) {
+    let element = e.target;
+    if (element.id === "taskDelete") {
+      let notebook = document.querySelector(".selected");
+      let tasks = map.get(notebook.firstChild.textContent);
+      let index = tasks.findIndex((el) => el.name === taskCurrent.textContent);
+      tasks.splice(index, 1);
+      taskCurrent.parentNode.remove();
+    }
+
+    if (element.id == "taskRename") {
+      let oldName = taskCurrent.textContent;
+      let newName = prompt(
+        "Enter new name for the notebook:",
+        taskCurrent.textContent
+      );
+      while (newName && newName.length > 40) {
+        alert(
+          "The name is too long or the same as another notebook. Must be no more than 40 characters."
+        );
+        newName = prompt("Enter new name for the notebook:", newName);
+      }
+      if (newName) {
+        taskCurrent.textContent = newName;
+
+        let notebook = document.querySelector(".selected");
+        let tasks = map.get(notebook.firstChild.textContent);
+        let index = tasks.findIndex((el) => el.name === oldName);
+        tasks[index].name = taskCurrent.textContent;
+      }
+    }
+  });
+  console.log(map);
+}
+
+//поменять дату у задачи
+export function changeDate() {
+  main.addEventListener("click", function (e) {
+    let element = e.target;
+    let changeDateInput = document.createElement("input");
+    if (element.classList.contains("dueDate")) {
+      let minDate = currentDate();
+      changeDateInput.setAttribute("type", "date");
+      changeDateInput.setAttribute("min", minDate);
+      changeDateInput.style.backgroundColor = "var(--third-color-color)";
+      element.after(changeDateInput);
+      element.classList.add("active");
+
+      changeDateInput.addEventListener("change", function () {
+        const formattedDate = new Date(
+          changeDateInput.value
+        ).toLocaleDateString("ru-RU", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+        });
+        element.textContent = formattedDate;
+        changeDateInput.remove();
+        element.classList.remove("active");
+      });
+    }
+  });
 }
 
 createTask("Show Peter something", "2023-10-15", "Show him my code", false);

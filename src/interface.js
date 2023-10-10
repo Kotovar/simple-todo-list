@@ -32,6 +32,7 @@ function hiddenAddTaskButton() {
 }
 
 // Отобразить задачи в выбранном блокноте
+
 function showTasksInDom() {
   let notebook = document.querySelector(".selected");
   let tasks = map.get(notebook.firstChild.textContent);

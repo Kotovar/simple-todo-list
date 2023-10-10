@@ -32,7 +32,7 @@ function addNotebookFromDOM(notebook) {
   previousNotebook.after(divNotebook);
 }
 
-//функция для удаления блокнотов
+//функция для удаления и переименования блокнотов
 function deleteRenameNotebook() {
   aside.addEventListener("click", function (e) {
     let element = e.target;
