@@ -1,6 +1,12 @@
 export { map, aside, createNotebook, deleteRenameNotebook };
 import { notebookCurrent, uniqueNotebook } from "./listenersNotebook";
-import { deleteTasksFromDom, addTaskDiv } from "./interface";
+import {
+  deleteTasksFromDom,
+  addTaskDiv,
+  showTasksInDom,
+  hiddenAddTaskButton,
+} from "./interface";
+import { updateLocalStorage } from "./localStorage";
 
 let map = new Map(); // Хранилище проектов
 let aside = document.querySelector("aside");
@@ -9,6 +15,7 @@ let aside = document.querySelector("aside");
 function createNotebook(notebookName) {
   map.set(notebookName, []);
   addNotebookFromDOM(notebookName);
+  updateLocalStorage(map);
 }
 
 //Функция для создания блокнота в DOM
@@ -30,6 +37,15 @@ function addNotebookFromDOM(notebook) {
       ? notebookColl[notebookColl.length - 1]
       : previousNotebook;
   previousNotebook.after(divNotebook);
+
+  let selectedElement = document.querySelector(".selected");
+  if (selectedElement) {
+    selectedElement.classList.remove("selected");
+  }
+  divNotebook.classList.add("selected");
+  deleteTasksFromDom();
+  showTasksInDom();
+  hiddenAddTaskButton();
 }
 
 //функция для удаления и переименования блокнотов
@@ -41,6 +57,7 @@ function deleteRenameNotebook() {
         ? (deleteTasksFromDom(), addTaskDiv.classList.add("hidden"))
         : null;
       map.delete(notebookCurrent.textContent);
+      updateLocalStorage(map);
       notebookCurrent.parentNode.remove();
     }
 
@@ -57,14 +74,8 @@ function deleteRenameNotebook() {
         notebookCurrent.textContent = newName;
         map.set(newName, map.get(oldName));
         map.delete(oldName);
+        updateLocalStorage(map);
       }
     }
   });
-  console.log(map);
 }
-
-//Примеры
-
-createNotebook("Work");
-createNotebook("Hobbies");
-createNotebook("Studing");

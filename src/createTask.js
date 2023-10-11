@@ -1,5 +1,6 @@
 import { map } from "./createNotebook";
 import { main, taskCurrent } from "./listenersTask.js";
+import { updateLocalStorage } from "./localStorage";
 
 export function currentDate() {
   var dateTask = document.getElementById("dateTask");
@@ -12,27 +13,29 @@ export function currentDate() {
 
 // Функция для создания задачи в Map и помещения его на страницу
 export function createTask(taskName, date, descriptionTask, taskDone) {
-  const formattedDate = date
-    ? new Date(date).toLocaleDateString("ru-RU", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-      })
-    : "No deadline";
+  let dateRegex = /^\d{2}\.\d{2}\.\d{4}$/;
+  const formattedDate =
+    date && dateRegex.test(date) // Если дата соответствует формату xx.xx.xxxx, то formattedDate равно date
+      ? date
+      : date && date !== "No deadline" // Если дата существует и не равна "No deadline", то formattedDate преобразуется в локальный формат
+      ? new Date(date).toLocaleDateString("ru-RU", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+        })
+      : "No deadline"; // Если дата равна "No deadline", то formattedDate равно "No deadline"
+  console.log(formattedDate);
   addTaskFromDOM(taskName, formattedDate);
+
   let taskObject = {
     name: taskName,
     description: descriptionTask,
     deadline: formattedDate,
     done: taskDone,
   };
+
   let selectedDiv = document.querySelector(".selected");
-  let selectedText;
-  if (selectedDiv) {
-    selectedText = selectedDiv.firstChild.textContent;
-  } else {
-    selectedText = "Studing";
-  }
+  let selectedText = selectedDiv.firstChild.textContent;
   pushTaskToMap(taskObject, selectedText);
 }
 
@@ -40,14 +43,7 @@ export function createTask(taskName, date, descriptionTask, taskDone) {
 function pushTaskToMap(task, notebook) {
   let notebookFromMap = map.get(notebook);
   notebookFromMap.push(task);
-  upadteLocalStorage(map);
-}
-
-//обновление данных в localStorage
-function upadteLocalStorage(map) {
-  let notesJSON = JSON.stringify(Object.fromEntries(map));
-  localStorage.setItem("notes", notesJSON);
-  console.log(notesJSON);
+  updateLocalStorage(map);
 }
 
 //Функция для создания задачи в DOM
@@ -78,9 +74,7 @@ export function addTaskFromDOM(task, date, done) {
       : null;
     divTask.append(el);
   }
-
   let previousTask = document.getElementById("h1Task");
-
   let taskColl = document.querySelectorAll(".task");
   previousTask =
     taskColl.length > 0 ? taskColl[taskColl.length - 1] : previousTask;
@@ -96,6 +90,7 @@ export function deleteRenameTask() {
       let tasks = map.get(notebook.firstChild.textContent);
       let index = tasks.findIndex((el) => el.name === taskCurrent.textContent);
       tasks.splice(index, 1);
+      updateLocalStorage(map);
       taskCurrent.parentNode.remove();
     }
 
@@ -118,25 +113,41 @@ export function deleteRenameTask() {
         let tasks = map.get(notebook.firstChild.textContent);
         let index = tasks.findIndex((el) => el.name === oldName);
         tasks[index].name = taskCurrent.textContent;
+        updateLocalStorage(map);
       }
     }
   });
-  console.log(map);
 }
 
-//поменять дату у задачи
+// Функция для создания и настройки элемента input
+function createInput(element) {
+  let changeDateInput = document.createElement("input");
+  let minDate = currentDate();
+  changeDateInput.setAttribute("type", "date");
+  changeDateInput.setAttribute("min", minDate);
+  changeDateInput.style.backgroundColor = "var(--third-color-color)";
+  element.after(changeDateInput);
+  return changeDateInput;
+}
+
+// Функция для обновления данных в map и localStorage для даты задачи
+function updateData(element) {
+  let taskName = element.previousElementSibling.textContent;
+  let notebook = document.querySelector(".selected");
+  let tasks = map.get(notebook.firstChild.textContent);
+  let index = tasks.findIndex((el) => el.name === taskName);
+  tasks[index].deadline = element.textContent;
+
+  console.log("новое время " + element.textContent);
+  updateLocalStorage(map);
+}
+
 export function changeDate() {
   main.addEventListener("click", function (e) {
     let element = e.target;
-    let changeDateInput = document.createElement("input");
     if (element.classList.contains("dueDate")) {
-      let minDate = currentDate();
-      changeDateInput.setAttribute("type", "date");
-      changeDateInput.setAttribute("min", minDate);
-      changeDateInput.style.backgroundColor = "var(--third-color-color)";
-      element.after(changeDateInput);
+      let changeDateInput = createInput(element);
       element.classList.add("active");
-
       changeDateInput.addEventListener("change", function () {
         const formattedDate = new Date(
           changeDateInput.value
@@ -148,11 +159,8 @@ export function changeDate() {
         element.textContent = formattedDate;
         changeDateInput.remove();
         element.classList.remove("active");
+        updateData(element);
       });
     }
   });
 }
-
-createTask("Show Peter something", "2023-10-15", "Show him my code", false);
-createTask("Iron the cat", "2023-10-25", "Iron with your hand!", false);
-createTask("Buy new cat", "2023-10-08", "I hope this is a joke", false);

@@ -1,5 +1,6 @@
 import { currentDate, createTask } from "./createTask";
 import { map } from "./createNotebook.js";
+import { updateLocalStorage } from "./localStorage";
 
 export function listenersTask() {
   startListenerAddTaskMenu();
@@ -76,6 +77,7 @@ function startListenersTaskButtonAdd() {
         descriptionTask.value,
         false
       );
+      console.log(dateTask.value);
       createTaskForm.classList.add("hidden");
       clear();
     }
@@ -101,7 +103,6 @@ function startListenersTaskButtonCancel() {
 function clear() {
   addNameTask.value = "";
   addDescriptionTask.value = "";
-  currentDate();
 }
 
 // прослушка значка выполнения задачи
@@ -117,6 +118,7 @@ function startListenerCheckTask() {
         notebook.forEach((el) => {
           if (el.name == element.nextElementSibling.textContent) {
             el.done = true;
+            updateLocalStorage(map);
           }
         });
       }
@@ -127,6 +129,7 @@ function startListenerCheckTask() {
       notebook.forEach((el) => {
         if (el.name == element.nextElementSibling.textContent) {
           el.done = false;
+          updateLocalStorage(map);
         }
       });
     }
@@ -143,7 +146,7 @@ function findAndUpdateTask(name, description) {
   }
 }
 
-// Показ и скрытие описания задачи
+// Показ и скрытие описания задачи, обновление описания
 function showOrHideDescription(element) {
   let descriptionDiv = document.getElementById("descriptionDiv");
   let description = document.getElementById("description");
@@ -174,5 +177,6 @@ function startListenerShowDescription() {
   });
   description.addEventListener("input", function () {
     findAndUpdateTask(currentTask, description.value);
+    updateLocalStorage(map);
   });
 }

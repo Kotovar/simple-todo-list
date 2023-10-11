@@ -1,8 +1,6 @@
 import { aside, map } from "./createNotebook.js";
 import { addTaskFromDOM } from "./createTask.js";
-import { main } from "./listenersTask.js";
 
-let previous;
 export let addTaskDiv = document.getElementById("addTaskDiv");
 
 //определить какой блокнот выбран, показать задачи из блокнота
@@ -15,11 +13,13 @@ export function selectNotepad() {
       ? element.parentElement
       : null;
     if (element) {
-      if (previous) {
-        previous.classList.remove("selected");
+      let notebooks = document.querySelectorAll(".notebook");
+      for (let div of notebooks) {
+        if (div.classList.contains("selected")) {
+          div.classList.remove("selected");
+        }
       }
       element.classList.add("selected");
-      previous = element;
       deleteTasksFromDom();
       showTasksInDom();
       hiddenAddTaskButton();
@@ -27,13 +27,12 @@ export function selectNotepad() {
   });
 }
 
-function hiddenAddTaskButton() {
+export function hiddenAddTaskButton() {
   addTaskDiv.classList.remove("hidden");
 }
 
 // Отобразить задачи в выбранном блокноте
-
-function showTasksInDom() {
+export function showTasksInDom() {
   let notebook = document.querySelector(".selected");
   let tasks = map.get(notebook.firstChild.textContent);
   tasks.forEach((el) => addTaskFromDOM(el.name, el.deadline, el.done));
