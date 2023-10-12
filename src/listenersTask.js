@@ -11,7 +11,7 @@ export function listenersTask() {
   dropDownTask();
 }
 
-let createTaskForm = document.getElementById("createTaskForm");
+export let createTaskForm = document.getElementById("createTaskForm");
 let addNameTask = document.getElementById("addNameTask");
 let addDescriptionTask = document.getElementById("addDescriptionTask");
 export let main = document.querySelector("main");

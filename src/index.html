@@ -19,18 +19,24 @@
     <div id="root">
       <header>
         <div>
-          <span class="material-symbols-outlined icon-click"> menu </span>
+          <span class="material-symbols-outlined icon-click noselect">
+            menu
+          </span>
         </div>
-        <h1>Simple-todo-list</h1>
+        <h1 class="noselect">Simple-todo-list</h1>
         <div>
-          <span class="material-symbols-outlined icon-click"> toggle_off </span>
+          <span
+            class="material-symbols-outlined icon-click noselect"
+            id="switch"
+            >toggle_off</span
+          >
         </div>
       </header>
       <aside>
-        <h1 id="h1Notebook">Notebook</h1>
+        <h1 id="h1Notebook" class="noselect">Notebook</h1>
         <div id="addNotebookDiv">
-          <span class="material-symbols-outlined"> add_circle </span>
-          <div>Add Notebook</div>
+          <span class="material-symbols-outlined noselect"> add_circle </span>
+          <div class="noselect">Add Notebook</div>
         </div>
         <div id="createNotebookForm" class="hidden">
           <form action="">
@@ -49,12 +55,12 @@
         <!-- контекстное меню -->
       </aside>
       <main>
-        <h1 id="h1Task">Tasks</h1>
+        <h1 id="h1Task" class="noselect">Tasks</h1>
 
         <!-- Настройка добавления задачи -->
         <div id="addTaskDiv" class="hidden">
-          <span class="material-symbols-outlined"> add_circle </span>
-          <div>Add Task</div>
+          <span class="material-symbols-outlined noselect"> add_circle </span>
+          <div class="noselect">Add Task</div>
         </div>
         <!-- форма создания задачи -->
         <div id="createTaskForm" class="hidden">
@@ -68,7 +74,9 @@
             ></textarea>
             <input type="date" name="dateTask" id="dateTask" />
             <div>
-              <button type="button" id="addTaskButton">Add</button>
+              <button type="button" id="addTaskButton" class="noselect">
+                Add
+              </button>
               <button type="button" id="cancelTaskButton">Cancel</button>
             </div>
           </form>

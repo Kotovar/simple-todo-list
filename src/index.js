@@ -5,6 +5,9 @@ import { deleteRenameNotebook } from "./createNotebook.js";
 import { currentDate, deleteRenameTask, changeDate } from "./createTask";
 import { listenersTask } from "./listenersTask";
 import { downloadFromLocalStorage } from "./localStorage";
+import { switchLisneter, checkStatusDarkTheme } from "./buttonsHeader";
+
+//загрузка статуса тёмной темы
 
 //Старт прослушивателе
 downloadFromLocalStorage();
@@ -15,3 +18,5 @@ listenersTask();
 selectNotepad();
 deleteRenameTask();
 changeDate();
+switchLisneter();
+checkStatusDarkTheme();

@@ -24,7 +24,6 @@ export function createTask(taskName, date, descriptionTask, taskDone) {
           year: "numeric",
         })
       : "No deadline"; // Если дата равна "No deadline", то formattedDate равно "No deadline"
-  console.log(formattedDate);
   addTaskFromDOM(taskName, formattedDate);
 
   let taskObject = {

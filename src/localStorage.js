@@ -11,7 +11,6 @@ export function updateLocalStorage(map) {
 
 export function downloadFromLocalStorage() {
   let localJson = localStorage.getItem("notes");
-  console.log(localJson);
   let local = JSON.parse(localJson);
   if (local) {
     updateMap(local);
@@ -21,13 +20,10 @@ export function downloadFromLocalStorage() {
 // Функция для обновления данных в map
 function updateMap(local) {
   for (let [notebook, tasksInLocal] of local) {
-    console.log(tasksInLocal);
     map.set(notebook, tasksInLocal);
-    console.log(notebook);
     createNotebook(notebook);
     tasksInLocal.forEach((el) => {
       createTask(el.name, el.deadline, el.description, el.done);
-      console.log(el.deadline);
     });
   }
   let selectedElement = document.querySelector(".selected");

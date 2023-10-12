@@ -24,6 +24,26 @@ h1 {
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+/* темная тема */
+.darkTheme {
+  --second-font-color: rgb(101, 67, 58);
+  --main-font-color: beige;
+  --third-color-color: rgb(65, 43, 37);
+  --aside-color-hover: rgb(83, 56, 48);
+  --selected-color: rgb(75, 51, 44);
+  --main-color-hover: rgb(83, 57, 48);
+}
+
+/* убрать выделение элементов  */
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 #root {
   display: grid;
   grid-template-areas:
@@ -58,6 +78,9 @@ main > .task:hover,
 main > #addTaskDiv:hover {
   background-color: var(--main-color-hover);
   cursor: pointer;
+}
+#addTaskDiv:hover {
+  border-radius: 5px;
 }
 
 .task:hover,
@@ -147,6 +170,7 @@ aside h1,
 main h1 {
   text-align: center;
   margin-top: 1rem;
+  color: var(--main-font-color);
 }
 
 aside div {
@@ -270,6 +294,7 @@ main::-webkit-scrollbar {
 .inProcess {
   font-size: calc(var(--main-font-size) * 0.8);
   font-weight: 600;
+  color: var(--main-font-color);
 }
 
 .dueDate {
@@ -278,6 +303,7 @@ main::-webkit-scrollbar {
   border-radius: 5px;
   text-align: center;
   font-size: calc(var(--main-font-size) * 0.8);
+  color: var(--main-font-color);
 }
 
 .dueDate.active {
@@ -343,6 +369,7 @@ main::-webkit-scrollbar {
   background-color: var(--third-color-color);
   outline: none;
   padding: 0.5rem;
+  color: var(--main-font-color);
 }
 /* выполненная и задача в процессе */
 

@@ -1,5 +1,6 @@
 import { aside, map } from "./createNotebook.js";
 import { addTaskFromDOM } from "./createTask.js";
+import { createTaskForm } from "./listenersTask.js";
 
 export let addTaskDiv = document.getElementById("addTaskDiv");
 
@@ -23,6 +24,7 @@ export function selectNotepad() {
       deleteTasksFromDom();
       showTasksInDom();
       hiddenAddTaskButton();
+      createTaskForm.classList.add("hidden");
     }
   });
 }
