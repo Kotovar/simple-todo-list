@@ -36,7 +36,6 @@ h1 {
 
 /* убрать выделение элементов  */
 .noselect {
-  -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
@@ -387,12 +386,12 @@ main::-webkit-scrollbar {
   }
 
   aside {
-    height: 15vh;
+    height: 30vh;
     width: 100vw;
   }
 
   main {
-    height: 75vh;
+    height: 60vh;
     width: 100vw;
   }
 
