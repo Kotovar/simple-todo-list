@@ -1,8 +1,14 @@
 # simple todo-list
 simple todo-list is a web app that lets you create and manage multiple lists of tasks.
 
+<p>Creating, editing and deleting notebooks</p> 
+
 ![1 createNotebook](https://github.com/Kotovar/simple-todo-list/assets/77914431/4df6d2fc-a17d-4b8e-a499-82380c94189d)
+<p>Creating, editing and deleting tasks</p> 
+
 ![2 createTask](https://github.com/Kotovar/simple-todo-list/assets/77914431/e1ee2bdc-8bc7-4614-b7b7-ac8e3934ccd3)
+<p>Toggle hiding panel and dark theme mode</p> 
+
 ![3 topButtons](https://github.com/Kotovar/simple-todo-list/assets/77914431/151ab801-958d-4234-a64c-9fa6dd331ac5)
 
 ## How to use
