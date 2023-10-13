@@ -402,4 +402,7 @@ main::-webkit-scrollbar {
   .notebookName {
     font-size: var(--main-font-size);
   }
+  .dueDate {
+    border: none;
+  }
 }
