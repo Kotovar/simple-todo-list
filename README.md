@@ -33,7 +33,8 @@ open the index.html file in your browser
 simple todo-list is built with HTML, CSS, and vanilla JavaScript. It uses webpack to bundle the modules and assets into a single file. It uses local storage to store the notebooks and tasks data as well as the theme preference. The notebooks are stored in a Map object, where the key is the notebook name and the value is an array of task objects. Each task object has four properties: name, description, due date, and status. The app uses event listeners to handle user interactions such as creating, editing, deleting, and completing notebooks and tasks. It also uses DOM manipulation to update the user interface accordingly.
 
 ![main mode](https://github.com/Kotovar/simple-todo-list/assets/77914431/56f6a36f-4478-433b-ac96-71a46fd55420)
-![dark mobile mode](https://github.com/Kotovar/simple-todo-list/assets/77914431/0aa4901b-d724-4219-8cac-be3de00f8ffe)
+![1](https://github.com/Kotovar/simple-todo-list/assets/77914431/2b5b9073-f57c-46b7-98ca-91b0f9bc2294)
+
 
 ## Credits
 
