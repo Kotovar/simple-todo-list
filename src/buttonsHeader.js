@@ -1,13 +1,13 @@
 import { aside } from "./createNotebook";
 import { main } from "./listenersTask.js";
 
-let switchMode = document.getElementById("switch");
-let header = document.querySelector("header");
-let textArea = document.getElementById("addDescriptionTask");
-let inputTaskName = document.getElementById("addNameTask");
-let inputDate = document.getElementById("dateTask");
-let addNameNotebook = document.getElementById("addNameNotebook");
-let hidePanel = document.getElementById("hidePanel");
+const switchMode = document.getElementById("switch");
+const header = document.querySelector("header");
+const textArea = document.getElementById("addDescriptionTask");
+const inputTaskName = document.getElementById("addNameTask");
+const inputDate = document.getElementById("dateTask");
+const addNameNotebook = document.getElementById("addNameNotebook");
+const hidePanel = document.getElementById("hidePanel");
 let darkThemeOn;
 
 export function checkStatusDarkTheme() {
@@ -23,13 +23,13 @@ export function switchLisneter() {
   switchMode.addEventListener("click", toggleDarkTheme);
 }
 
-// функция переключения тёмной темы
+// Функция переключения тёмной темы
 export function toggleDarkTheme() {
   darkThemeOn = !darkThemeOn;
   localStorage.setItem("darkTheme", darkThemeOn);
-  let elementsDarkTheme = [aside, header, main, inputDate];
+  const elementsDarkTheme = [aside, header, main, inputDate];
   elementsDarkTheme.forEach((element) => element.classList.toggle("darkTheme"));
-  let elementsBackground = [
+  const elementsBackground = [
     textArea,
     inputTaskName,
     inputDate,
@@ -48,7 +48,7 @@ function toggleBackgroundAndText(element) {
       : "rgb(65, 43, 37)";
 }
 
-// кнопка свернуть панель блокнотов
+// Кнопка свернуть панель блокнотов
 export function toggleListener() {
   hidePanel.addEventListener("click", toggleNotebookPanel);
 }
@@ -60,13 +60,13 @@ function toggleNotebookPanel() {
     // Если да, то применяем стили для мобильной версии
     aside.style.width = aside.style.width === "0px" ? "100vw" : "0";
     aside.style.height = aside.style.height === "0px" ? "30vh" : "0";
-    // main.style.width = "100vw";
+    // Main.style.width = "100vw";
     main.style.height = main.style.height === "90vh" ? "60vh" : "90vh";
   } else {
     // Если нет, то применяем стили для обычной версии
     aside.style.width = aside.style.width === "0px" ? "20vw" : "0";
     aside.style.height = aside.style.height === "0px" ? "90vh" : "0";
     main.style.width = main.style.width === "100vw" ? "80vw" : "100vw";
-    // main.style.height = "90vh";
+    // Main.style.height = "90vh";
   }
 }

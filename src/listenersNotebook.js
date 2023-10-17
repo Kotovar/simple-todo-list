@@ -7,34 +7,35 @@ export default function listenersNotebook() {
   dropDownNotebook();
 }
 
-let createNotebookForm = document.getElementById("createNotebookForm");
-let addNameNotebook = document.getElementById("addNameNotebook");
+const createNotebookForm = document.getElementById("createNotebookForm");
+const addNameNotebook = document.getElementById("addNameNotebook");
 
-//Проверка что все блокноты уникальные
+// Проверка что все блокноты уникальные
 export function uniqueNotebook(name) {
-  let allNotebooks = document.getElementsByClassName("notebookName");
-  for (let notebook of allNotebooks) {
+  const allNotebooks = document.getElementsByClassName("notebookName");
+  for (const notebook of allNotebooks) {
     if (notebook.textContent === name) {
       return false;
     }
   }
+
   return true;
 }
 
-// прослушка "Add notebook" для открытия окна создания блокнота
+// Прослушка "Add notebook" для открытия окна создания блокнота
 function startListenerAddNotebookMenu() {
-  let addNotebookDiv = document.getElementById("addNotebookDiv");
-  addNotebookDiv.addEventListener("click", function () {
+  const addNotebookDiv = document.getElementById("addNotebookDiv");
+  addNotebookDiv.addEventListener("click", () => {
     createNotebookForm.classList.contains("hidden")
       ? createNotebookForm.classList.remove("hidden")
       : null;
   });
 }
 
-// прослушка "Add" для добавления блокнота
+// Прослушка "Add" для добавления блокнота
 function startListenersNotebookButtonAdd() {
-  let addNotebookButton = document.getElementById("addNotebookButton");
-  addNotebookButton.addEventListener("click", function () {
+  const addNotebookButton = document.getElementById("addNotebookButton");
+  addNotebookButton.addEventListener("click", () => {
     if (addNameNotebook.value === "") {
       alert("Notebook name not entered");
     } else if (!uniqueNotebook(addNameNotebook.value.trim())) {
@@ -46,7 +47,7 @@ function startListenersNotebookButtonAdd() {
     }
   });
 
-  addNameNotebook.addEventListener("keypress", function (e) {
+  addNameNotebook.addEventListener("keypress", (e) => {
     if (e.code === "Enter") {
       addNotebookButton.click();
       e.preventDefault();
@@ -54,10 +55,10 @@ function startListenersNotebookButtonAdd() {
   });
 }
 
-// прослушка "Cancel" для отмены ввода названия блокнота
+// Прослушка "Cancel" для отмены ввода названия блокнота
 function startListenersNotebookButtonCancel() {
-  let cancelNotebookButton = document.getElementById("cancelNotebookButton");
-  cancelNotebookButton.addEventListener("click", function () {
+  const cancelNotebookButton = document.getElementById("cancelNotebookButton");
+  cancelNotebookButton.addEventListener("click", () => {
     createNotebookForm.classList.add("hidden");
     clear();
   });
@@ -68,13 +69,13 @@ function clear() {
 }
 
 // Открытие выпадающего списка для блокнотов
-let notebookOption = document.getElementById("notebookOption");
+const notebookOption = document.getElementById("notebookOption");
 export let notebookCurrent;
 let element;
 
 function dropDownNotebook() {
-  let body = document.querySelector("body");
-  body.addEventListener("click", function (e) {
+  const body = document.querySelector("body");
+  body.addEventListener("click", (e) => {
     element = e.target;
     if (element.classList.contains("notebookMenu")) {
       positionMenu();
@@ -87,14 +88,14 @@ function dropDownNotebook() {
   });
 }
 
-window.addEventListener("resize", function () {
+window.addEventListener("resize", () => {
   if (notebookOption.style.display === "block") {
     positionMenu();
   }
 });
 
 function positionMenu() {
-  let coordinates = element.getBoundingClientRect();
+  const coordinates = element.getBoundingClientRect();
   notebookOption.style.left = coordinates.left + "px";
   notebookOption.style.top = coordinates.top + "px";
   notebookOption.style.transform = "translate(-90%, -90%)";

@@ -1,4 +1,4 @@
-import { currentDate, createTask } from "./createTask";
+import { createTask } from "./createTask";
 import { map } from "./createNotebook.js";
 import { updateLocalStorage } from "./localStorage";
 
@@ -11,20 +11,20 @@ export function listenersTask() {
   dropDownTask();
 }
 
-export let createTaskForm = document.getElementById("createTaskForm");
-let addNameTask = document.getElementById("addNameTask");
-let addDescriptionTask = document.getElementById("addDescriptionTask");
-export let main = document.querySelector("main");
+export const createTaskForm = document.getElementById("createTaskForm");
+const addNameTask = document.getElementById("addNameTask");
+const addDescriptionTask = document.getElementById("addDescriptionTask");
+export const main = document.querySelector("main");
 
 // Открытие выпадающего списка для блокнотов
-let taskOption = document.getElementById("taskOption");
+const taskOption = document.getElementById("taskOption");
 export let taskCurrent;
 let element;
 
 function dropDownTask() {
-  let body = document.querySelector("body");
+  const body = document.querySelector("body");
 
-  body.addEventListener("click", function (e) {
+  body.addEventListener("click", (e) => {
     element = e.target;
     if (element.classList.contains("taskMenu")) {
       positionMenu();
@@ -39,35 +39,35 @@ function dropDownTask() {
   });
 }
 
-window.addEventListener("resize", function () {
+window.addEventListener("resize", () => {
   if (taskOption.style.display === "block") {
     positionMenu();
   }
 });
 
 function positionMenu() {
-  let coordinates = element.getBoundingClientRect();
+  const coordinates = element.getBoundingClientRect();
   taskOption.style.left = coordinates.left + "px";
   taskOption.style.top = coordinates.top + "px";
   taskOption.style.transform = "translate(-90%, -90%)";
 }
 
-// прослушка "Add Task" для открытия окна создания задачи
+// Прослушка "Add Task" для открытия окна создания задачи
 function startListenerAddTaskMenu() {
-  let addTaskDiv = document.getElementById("addTaskDiv");
-  addTaskDiv.addEventListener("click", function () {
+  const addTaskDiv = document.getElementById("addTaskDiv");
+  addTaskDiv.addEventListener("click", () => {
     createTaskForm.classList.contains("hidden")
       ? createTaskForm.classList.remove("hidden")
       : null;
   });
 }
 
-// прослушка "Add" для добавления задачи
+// Прослушка "Add" для добавления задачи
 function startListenersTaskButtonAdd() {
-  let addTaskButton = document.getElementById("addTaskButton");
-  let dateTask = document.getElementById("dateTask");
-  let descriptionTask = document.getElementById("addDescriptionTask");
-  addTaskButton.addEventListener("click", function () {
+  const addTaskButton = document.getElementById("addTaskButton");
+  const dateTask = document.getElementById("dateTask");
+  const descriptionTask = document.getElementById("addDescriptionTask");
+  addTaskButton.addEventListener("click", () => {
     if (addNameTask.value === "") {
       alert("Task name not entered");
     } else {
@@ -83,7 +83,7 @@ function startListenersTaskButtonAdd() {
     }
   });
 
-  addNameTask.addEventListener("keypress", function (e) {
+  addNameTask.addEventListener("keypress", (e) => {
     if (e.code === "Enter") {
       addTaskButton.click();
       e.preventDefault();
@@ -91,10 +91,10 @@ function startListenersTaskButtonAdd() {
   });
 }
 
-// прослушка "Cancel" для отмены ввода названия задачи
+// Прослушка "Cancel" для отмены ввода названия задачи
 function startListenersTaskButtonCancel() {
-  let cancelTaskButton = document.getElementById("cancelTaskButton");
-  cancelTaskButton.addEventListener("click", function () {
+  const cancelTaskButton = document.getElementById("cancelTaskButton");
+  cancelTaskButton.addEventListener("click", () => {
     createTaskForm.classList.add("hidden");
     clear();
   });
@@ -105,16 +105,16 @@ function clear() {
   addDescriptionTask.value = "";
 }
 
-// прослушка значка выполнения задачи
+// Прослушка значка выполнения задачи
 function startListenerCheckTask() {
-  main.addEventListener("click", function (e) {
-    let element = e.target;
-    let selectedDiv = document.querySelector(".selected");
+  main.addEventListener("click", (e) => {
+    const element = e.target;
+    const selectedDiv = document.querySelector(".selected");
     if (element.textContent === "radio_button_unchecked") {
       element.textContent = "radio_button_checked";
       element.nextElementSibling.classList.add("checkbox-done");
       if (selectedDiv) {
-        let notebook = map.get(selectedDiv.firstChild.textContent);
+        const notebook = map.get(selectedDiv.firstChild.textContent);
         notebook.forEach((el) => {
           if (el.name == element.nextElementSibling.textContent) {
             el.done = true;
@@ -125,7 +125,7 @@ function startListenerCheckTask() {
     } else if (element.textContent === "radio_button_checked") {
       element.textContent = "radio_button_unchecked";
       element.nextElementSibling.classList.remove("checkbox-done");
-      let notebook = map.get(selectedDiv.firstChild.textContent);
+      const notebook = map.get(selectedDiv.firstChild.textContent);
       notebook.forEach((el) => {
         if (el.name == element.nextElementSibling.textContent) {
           el.done = false;
@@ -138,9 +138,9 @@ function startListenerCheckTask() {
 
 // Поиск и обновление задачи
 function findAndUpdateTask(name, description) {
-  let notebookDiv = document.querySelector(".selected");
-  let tasks = map.get(notebookDiv.firstChild.textContent);
-  let task = tasks.find((el) => el.name === name);
+  const notebookDiv = document.querySelector(".selected");
+  const tasks = map.get(notebookDiv.firstChild.textContent);
+  const task = tasks.find((el) => el.name === name);
   if (task) {
     task.description = description;
   }
@@ -148,34 +148,36 @@ function findAndUpdateTask(name, description) {
 
 // Показ и скрытие описания задачи, обновление описания
 function showOrHideDescription(element) {
-  let descriptionDiv = document.getElementById("descriptionDiv");
-  let description = document.getElementById("description");
-  let notebookDiv = document.querySelector(".selected");
-  let tasks = map.get(notebookDiv.firstChild.textContent);
-  let task = tasks.filter(
+  const descriptionDiv = document.getElementById("descriptionDiv");
+  const description = document.getElementById("description");
+  const notebookDiv = document.querySelector(".selected");
+  const tasks = map.get(notebookDiv.firstChild.textContent);
+  const task = tasks.filter(
     (el) =>
       el.name === element.parentNode.querySelector(".inProcess").textContent
   )[0];
   if (task) {
     description.value = task.description;
   }
+
   element.parentNode.after(descriptionDiv);
   descriptionDiv.classList.toggle("hidden");
 }
 
 function startListenerShowDescription() {
   let currentTask;
-  main.addEventListener("click", function (e) {
-    let element = e.target;
+  main.addEventListener("click", (e) => {
+    const element = e.target;
     if (element === main) {
       document.getElementById("descriptionDiv").classList.add("hidden");
     }
+
     if (element.classList.contains("showDescription")) {
       currentTask = element.parentNode.querySelector(".inProcess").textContent;
       showOrHideDescription(element);
     }
   });
-  description.addEventListener("input", function () {
+  description.addEventListener("input", () => {
     findAndUpdateTask(currentTask, description.value);
     updateLocalStorage(map);
   });

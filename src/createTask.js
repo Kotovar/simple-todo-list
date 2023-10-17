@@ -1,11 +1,11 @@
 import { map } from "./createNotebook";
-import { main, taskCurrent } from "./listenersTask.js";
+import { main, taskCurrent } from "./listenersTask";
 import { updateLocalStorage } from "./localStorage";
 
 export function currentDate() {
-  var dateTask = document.getElementById("dateTask");
-  var today = new Date();
-  var minDate = today.toISOString().split("T")[0];
+  const dateTask = document.getElementById("dateTask");
+  const today = new Date();
+  const minDate = today.toISOString().split("T")[0];
   dateTask.setAttribute("min", minDate);
   dateTask.value = minDate;
   return minDate;
@@ -13,7 +13,7 @@ export function currentDate() {
 
 // Функция для создания задачи в Map и помещения его на страницу
 export function createTask(taskName, date, descriptionTask, taskDone) {
-  let dateRegex = /^\d{2}\.\d{2}\.\d{4}$/;
+  const dateRegex = /^\d{2}\.\d{2}\.\d{4}$/;
   const formattedDate =
     date && dateRegex.test(date) // Если дата соответствует формату xx.xx.xxxx, то formattedDate равно date
       ? date
@@ -26,39 +26,39 @@ export function createTask(taskName, date, descriptionTask, taskDone) {
       : "No deadline"; // Если дата равна "No deadline", то formattedDate равно "No deadline"
   addTaskFromDOM(taskName, formattedDate);
 
-  let taskObject = {
+  const taskObject = {
     name: taskName,
     description: descriptionTask,
     deadline: formattedDate,
     done: taskDone,
   };
 
-  let selectedDiv = document.querySelector(".selected");
-  let selectedText = selectedDiv.firstChild.textContent;
+  const selectedDiv = document.querySelector(".selected");
+  const selectedText = selectedDiv.firstChild.textContent;
   pushTaskToMap(taskObject, selectedText);
 }
 
-//функция для добавления задач в Map и localStorage
+// Функция для добавления задач в Map и localStorage
 function pushTaskToMap(task, notebook) {
-  let notebookFromMap = map.get(notebook);
+  const notebookFromMap = map.get(notebook);
   notebookFromMap.push(task);
   updateLocalStorage(map);
 }
 
-//Функция для создания задачи в DOM
+// Функция для создания задачи в DOM
 export function addTaskFromDOM(task, date, done) {
-  let radioButton = done ? "radio_button_checked" : "radio_button_unchecked";
-  let divTask = document.createElement("div");
+  const radioButton = done ? "radio_button_checked" : "radio_button_unchecked";
+  const divTask = document.createElement("div");
   divTask.classList.add("task");
-  let elements = [
+  const elements = [
     ["span", "material-symbols-outlined", radioButton],
     ["div", "inProcess", task],
     ["div", "dueDate", date],
     ["span", "material-symbols-outlined", "stat_minus_2"],
     ["span", "material-symbols-outlined", "menu"],
   ];
-  for (let [tag, className, text] of elements) {
-    let el = document.createElement(tag);
+  for (const [tag, className, text] of elements) {
+    const el = document.createElement(tag);
     el.classList.add(className);
     el.textContent = text;
     el.textContent === "menu" &&
@@ -73,28 +73,31 @@ export function addTaskFromDOM(task, date, done) {
       : null;
     divTask.append(el);
   }
+
   let previousTask = document.getElementById("h1Task");
-  let taskColl = document.querySelectorAll(".task");
+  const taskColl = document.querySelectorAll(".task");
   previousTask =
     taskColl.length > 0 ? taskColl[taskColl.length - 1] : previousTask;
   previousTask.after(divTask);
 }
 
-//функция для удаления и переименования задач
+// Функция для удаления и переименования задач
 export function deleteRenameTask() {
-  main.addEventListener("click", function (e) {
-    let element = e.target;
+  main.addEventListener("click", (e) => {
+    const element = e.target;
     if (element.id === "taskDelete") {
-      let notebook = document.querySelector(".selected");
-      let tasks = map.get(notebook.firstChild.textContent);
-      let index = tasks.findIndex((el) => el.name === taskCurrent.textContent);
+      const notebook = document.querySelector(".selected");
+      const tasks = map.get(notebook.firstChild.textContent);
+      const index = tasks.findIndex(
+        (el) => el.name === taskCurrent.textContent
+      );
       tasks.splice(index, 1);
       updateLocalStorage(map);
       taskCurrent.parentNode.remove();
     }
 
     if (element.id == "taskRename") {
-      let oldName = taskCurrent.textContent;
+      const oldName = taskCurrent.textContent;
       let newName = prompt(
         "Enter new name for the notebook:",
         taskCurrent.textContent
@@ -105,12 +108,13 @@ export function deleteRenameTask() {
         );
         newName = prompt("Enter new name for the notebook:", newName);
       }
+
       if (newName) {
         taskCurrent.textContent = newName;
 
-        let notebook = document.querySelector(".selected");
-        let tasks = map.get(notebook.firstChild.textContent);
-        let index = tasks.findIndex((el) => el.name === oldName);
+        const notebook = document.querySelector(".selected");
+        const tasks = map.get(notebook.firstChild.textContent);
+        const index = tasks.findIndex((el) => el.name === oldName);
         tasks[index].name = taskCurrent.textContent;
         updateLocalStorage(map);
       }
@@ -120,8 +124,8 @@ export function deleteRenameTask() {
 
 // Функция для создания и настройки элемента input
 function createInput(element) {
-  let changeDateInput = document.createElement("input");
-  let minDate = currentDate();
+  const changeDateInput = document.createElement("input");
+  const minDate = currentDate();
   changeDateInput.setAttribute("type", "date");
   changeDateInput.setAttribute("min", minDate);
   changeDateInput.style.backgroundColor = "var(--third-color-color)";
@@ -131,23 +135,23 @@ function createInput(element) {
 
 // Функция для обновления данных в map и localStorage для даты задачи
 function updateData(element) {
-  let taskName = element.previousElementSibling.textContent;
-  let notebook = document.querySelector(".selected");
-  let tasks = map.get(notebook.firstChild.textContent);
-  let index = tasks.findIndex((el) => el.name === taskName);
+  const taskName = element.previousElementSibling.textContent;
+  const notebook = document.querySelector(".selected");
+  const tasks = map.get(notebook.firstChild.textContent);
+  const index = tasks.findIndex((el) => el.name === taskName);
   tasks[index].deadline = element.textContent;
 
-  console.log("новое время " + element.textContent);
+  console.log(`новое время ${element.textContent}`);
   updateLocalStorage(map);
 }
 
 export function changeDate() {
-  main.addEventListener("click", function (e) {
-    let element = e.target;
+  main.addEventListener("click", (e) => {
+    const element = e.target;
     if (element.classList.contains("dueDate")) {
-      let changeDateInput = createInput(element);
+      const changeDateInput = createInput(element);
       element.classList.add("active");
-      changeDateInput.addEventListener("change", function () {
+      changeDateInput.addEventListener("change", () => {
         const formattedDate = new Date(
           changeDateInput.value
         ).toLocaleDateString("ru-RU", {
