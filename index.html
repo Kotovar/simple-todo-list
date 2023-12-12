@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Simple-todo-list</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Cinzel&family=Fraunces:opsz@9..144&family=Fuggles&family=Roboto+Slab:wght@100&family=Rokkitt&family=Young+Serif&family=Ysabeau+SC&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+		/>
+		<link rel="stylesheet" href="style.css" />
+	<script defer src="main.js"></script></head>
+	<body>
+		<div id="root">
+			<header>
+				<div>
+					<span
+						class="material-symbols-outlined icon-click noselect"
+						id="hidePanel"
+					>
+						menu
+					</span>
+				</div>
+				<h1 class="noselect">Simple-todo-list</h1>
+				<div>
+					<span
+						class="material-symbols-outlined icon-click noselect"
+						id="switch"
+						>toggle_off</span
+					>
+				</div>
+			</header>
+			<aside>
+				<h1 id="h1Notebook" class="noselect">Notebook</h1>
+				<div id="addNotebookDiv">
+					<span class="material-symbols-outlined noselect"> add_circle </span>
+					<div class="noselect">Add Notebook</div>
+				</div>
+				<div id="createNotebookForm" class="hidden">
+					<form action="">
+						<input id="addNameNotebook" type="text" maxlength="20" />
+						<div>
+							<button type="button" id="addNotebookButton">Add</button>
+							<button type="button" id="cancelNotebookButton">Cancel</button>
+						</div>
+					</form>
+				</div>
+				<!-- контекстное меню -->
+				<div class="optionMenu" id="notebookOption">
+					<button id="notebookRename" class="optionButton">Rename</button>
+					<button id="notebookDelete" class="optionButton">Delete</button>
+				</div>
+				<!-- контекстное меню -->
+			</aside>
+			<main>
+				<h1 id="h1Task" class="noselect">Tasks</h1>
+
+				<!-- Настройка добавления задачи -->
+				<div id="addTaskDiv" class="hidden">
+					<span class="material-symbols-outlined noselect"> add_circle </span>
+					<div class="noselect">Add Task</div>
+				</div>
+				<!-- форма создания задачи -->
+				<div id="createTaskForm" class="hidden">
+					<form action="">
+						<input id="addNameTask" type="text" maxlength="50" required />
+						<textarea
+							name=""
+							id="addDescriptionTask"
+							cols="30"
+							rows="10"
+						></textarea>
+						<input type="date" name="dateTask" id="dateTask" />
+						<div>
+							<button type="button" id="addTaskButton" class="noselect">
+								Add
+							</button>
+							<button type="button" id="cancelTaskButton">Cancel</button>
+						</div>
+					</form>
+				</div>
+				<!-- Настройка добавления задачи -->
+				<!-- Блок описания задачи, скрыт по умолчанию -->
+				<div id="descriptionDiv" class="hidden">
+					<textarea name="" id="description"></textarea>
+				</div>
+				<!-- Блок описания задачи, скрыт по умолчанию -->
+				<!-- контекстное меню -->
+				<div class="optionMenu" id="taskOption">
+					<button id="taskRename" class="optionButton">Rename</button>
+					<button id="taskDelete" class="optionButton">Delete</button>
+				</div>
+				<!-- контекстное меню -->
+			</main>
+		</div>
+	</body>
+</html>
