@@ -28,6 +28,8 @@ To use restaurant_page, you need to have Node.js and npm installed on your syste
 
 open the `dist/index.html` file in your browser
 
+[Live preview](https://kotovar.github.io/simple-todo-list/)
+
 ## How it works
 
 simple todo-list is built with HTML, CSS, and vanilla JavaScript. It uses webpack to bundle the modules and assets into a single file. It uses local storage to store the notebooks and tasks data as well as the theme preference. The notebooks are stored in a Map object, where the key is the notebook name and the value is an array of task objects. Each task object has four properties: name, description, due date, and status. The app uses event listeners to handle user interactions such as creating, editing, deleting, and completing notebooks and tasks. It also uses DOM manipulation to update the user interface accordingly.
@@ -38,4 +40,4 @@ simple todo-list is built with HTML, CSS, and vanilla JavaScript. It uses webpac
 
 ## Credits
 
-This project was inspired by [[The Odin Project](https://www.theodinproject.com/lessons/node-path-javascript-todo-list)], which is an open source curriculum for learning web development.
+This project was inspired by [The Odin Project](https://www.theodinproject.com/lessons/node-path-javascript-todo-list), which is an open source curriculum for learning web development.
