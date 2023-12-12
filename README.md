@@ -15,18 +15,18 @@ simple todo-list is a web app that lets you create and manage multiple lists of 
 
 To use restaurant_page, you need to have Node.js and npm installed on your system. You can then clone this repository and run the following commands:
 
--npm install -g webpack: to install webpack globally
+`npm install -g webpack` to install webpack globally
 
 
  next need to make in the project directory
 
  
--npm link webpack-cli 
+`npm link webpack-cli`
 
 
--webpack
+`webpack`
 
-open the index.html file in your browser
+open the `dist/index.html` file in your browser
 
 ## How it works
 
